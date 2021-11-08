@@ -1,6 +1,9 @@
 // TODO: Require Controllers...
 const createPOST = require("../controllers/createPOST");
 const indexGET = require("../controllers/indexGET");
+const articleGET = require("../controllers/articleGET");
+const mongoose = require("mongoose");
+const Article = require("../models/Article");
 
 module.exports = (app) => {
     //TODO...
@@ -12,10 +15,7 @@ module.exports = (app) => {
         res.render("all-articles");
     });
 
-    app.get("/article", function(req,res){
-        //specific article
-        res.render("article");
-    });
+    app.get("/article/:id", articleGET);
 
     app.get("/create", function(req,res){
 

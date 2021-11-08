@@ -2,6 +2,7 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const bodyParser = require('body-parser');
 const { body } = require('express-validator');
+const mongoose = require('mongoose');
 
 module.exports = (app) => {
     //TODO: Setup the view engine
