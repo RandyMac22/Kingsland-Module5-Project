@@ -1,28 +1,36 @@
-const fs = require('fs');
+const fs = require("fs");
 
 const Article = require("../models/Article");
 
 module.exports = function(req,res){
     //specific article
-    console.log(req.params);
-    let id;
-    if(Number(req.params.id)){
-        id = req.params.id;
+    let user = res.user;
+    //console.log(user)
+    let context = {}; 
+
+    if(user){
+        context.loggedIn = true
     }
 
-    fs.readFile("./config/database.json", "utf8",(err,data) => {
-        if(err) throw err;
+    console.log(req.params);
+    let id = req.params.id;
+    //get the data from the db
+    Article.findById(id).then(article=>{
+        // if (context.creator == user.id){
+        //     context.isCurrentUser = true;
+        // } 
+        //console.log(article);
+        //set it into the article object
 
-        let articles = JSON.parse(data);
-        let cube = articles.find(article => article.id == id);
-       
-        let context = {
-            ...article
-        };
+        context.id = id;
+        context.title = article.title;
+        context.description = article.description;
+        context.creator = article.creator;
         
-        res.render("index", context)
-    })
+        // if (context.creator == user.id){
+        //     context.isCurrentUser = true;
+        // } 
+        res.render("article", context);
+    });
 
-    
-    res.render("article/:id", context);
-}
+};

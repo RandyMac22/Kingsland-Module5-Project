@@ -1,38 +1,36 @@
-const fs = require("fs");
-const formidable = require("formidable");
+//const fs = require("fs");
 const Article = require("../models/Article");
 const { ResultWithContext } = require("express-validator/src/chain");
 
 module.exports = function(req,res) {
     console.log("Creating an ARTICLE!!");
     console.log(Article);
+    let user = res.user;
+    console.log(user);
+    let context = {};
+
+    if(user){
+        context.loggedIn = true;
+        context.firstName = user.username;
+    }
     //take in the create article information
     console.log(req.body);
+    let creator = user.id;
     let fields = req.body;
-    let newArticle = new Article(
-        fields.title,
-        fields.description
-    );
-    console.log(newArticle);
-
-    fs.readFile("./config/database.json", "utf8", (err, data) => {
-        if(err) throw err;
-        //console.log("Uploading Article data");
-        let articles = JSON.parse(data);
-        articles.push(newArticle);
-        let json = JSON.stringify(articles);
-        console.log(json);
-
-        fs.writeFile("./config/database.json", json, (err) => {
-            if(err) throw err;
-            console.log("Data uploaded successfully");
-
-            //redirect to the "/" route
-            //otherwise send error to the front end
-
-            res.redirect("/");
-        });
+    new Article({
+        title: fields.title,
+        description: fields.description,
+        creator: creator
+    })
+    .save()
+    .then(article=>{
+        console.log(article);
+        //console.log(newArticle);
+        res.redirect("/");
+    })
+    .catch(err=>{
+        console.log(err);
     });
-        
-    
+    console.log(creator);
 };
+

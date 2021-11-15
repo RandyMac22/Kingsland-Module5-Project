@@ -1,51 +1,18 @@
 <body>
-    <div>
-        <aside>
-            <div class="center">
-                <img class="logo" src="../static/img/KingslandLogo.jpeg" alt="logo">
-            </div>
-
-            <nav>
-                {{#if loggedIn}}
-                <a href="/">Main Page</a>
-                <a href="/all-articles">All Articles</a>
-                <form>
-                    <input type="text">
-                    <input type="submit" value="Search">
-                </form>
-                <a href="/create">Create New Article</a>
-                {{else}}
-                <a href="/">Main Page</a>
-                <a href="/all-articles">All Articles</a>
-                <form>
-                    <input type="text">
-                    <input type="submit" value="Search">
-                </form>
-                {{/if}}
-            </nav>
-        </aside>
-        <div id="container">
-            <header>
-                {{#if loggedIn}}
-                <span>Welcome, {{firstName}}!</span>
-                <a href="#">[Logout]</a>
-                {{else}}
-                <a href="/login">Login</a>
-                <a href="/register">Register</a>
-                {{/if}}
-            </header>
+    <div>     
+        <div id="container">          
             <main>
                 <h1>Welcome to KingUni Wiki!</h1>
                 <section id="featured">
-                    <h2>Latests articles</h2>
-                    {{#each article}}
+                    <h2>Latest articles</h2>
+                    {{#each articles}}
                     <article>
                         <h3>{{title}}</h3>
                         <p>
                             {{description}}&hellip;
                         </p>
                         <div class="controls">
-                            <a href="/article/:id">Read more</a>
+                            <a href="/article/{{id}}">Read more</a>
                         </div>
                     </article>
                     {{else}}

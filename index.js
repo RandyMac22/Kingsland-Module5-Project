@@ -11,4 +11,4 @@ require('./config/routes')(app);
 
 app.listen(config.port, console.log(`Listening on port ${config.port}!`));
 
-console.log(__dirname);
+//console.log(__dirname);
