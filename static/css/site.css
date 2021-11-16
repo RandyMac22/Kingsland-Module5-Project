@@ -170,6 +170,10 @@ article>p {
 	font-size: 24px;
 }
 
+.text-style {
+    white-space: pre-wrap;
+}
+
 #notifications {
 	width: 100%;
 	margin-top: 1%;

@@ -71,6 +71,14 @@ module.exports = (app) => {
         // console.log(user);
         let context = {};
 
+        let id;
+        id = req.params.id;
+
+        Article.findById(id).then(article=>{
+            context.id = article._id;
+            
+        })
+
         if(user){
             context.loggedIn = true;
             context.firstName = user.username;
