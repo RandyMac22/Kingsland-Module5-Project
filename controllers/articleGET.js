@@ -9,7 +9,7 @@ module.exports = function(req,res){
     let context = {}; 
 
 
-    console.log(req.params);
+    //console.log(req.params);
     let id = req.params.id;
     //get the data from the db
     Article.findById(id).then(article=>{
@@ -18,9 +18,7 @@ module.exports = function(req,res){
             context.loggedIn = true;
             context.firstName = user.username;
         }
-        // if (context.creator == user.id){
-        //     context.isCurrentUser = true;
-        // } 
+
         //console.log(article);
         //set it into the article object
 
@@ -28,10 +26,10 @@ module.exports = function(req,res){
         context.title = article.title;
         context.description = article.description;
         context.creator = article.creator;
-        
-        // if (context.creator == user.id){
-        //     context.isCurrentUser = true;
-        // } 
+    
+        if (context.creator == user.id){
+            context.isCurrentUser = true;
+        } 
         res.render("article", context);
     });
 

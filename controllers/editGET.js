@@ -10,8 +10,7 @@ module.exports = function(req, res) {
     let id;
     id = req.params.id;
 
-    Article.findById(id).then(article=>{
-        
+    Article.findById(id).then(article=>{    
         if(user){
             context.loggedIn = true;
             context.firstName = user.username;
