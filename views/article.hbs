@@ -1,26 +1,22 @@
-<body>
-    <div>
-        <div id="container">
-            <main>
+
                 <h1>Welcome to KingUni Wiki!</h1>
                 <div class="spacer">
                     <h2>{{title}}</h2>
                         <div class="controls">
-                            {{#if loggedIn}}
-                            <a href="/edit/article/{{id}}">[edit]</a>
-                            {{else}} {{#if isCurrentUser}}
+                            {{#if isCurrentUser}}
                             <a href="/edit/article/{{id}}">[edit]</a>
                             <a href="/delete/article/{{id}}">[delete]</a>
+                            {{else}}{{#if loggedIn}}
+                            <a href="/edit/article/{{id}}">[edit]</a>
                             {{/if}}{{/if}}
                         </div>
                     <article>
-                        {{description}}
+                        <div>
+                            <p class="text-style">
+                                {{description}}
+                            </p>
+                        </div>
+                        
                     </article>
                 </div>
-            </main>
-            <footer>
-                KingUni Wiki &copy; 2020
-            </footer>
-        </div>
-    </div>
-</body>
+     

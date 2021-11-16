@@ -8,14 +8,16 @@ module.exports = function(req,res){
     //console.log(user)
     let context = {}; 
 
-    if(user){
-        context.loggedIn = true
-    }
 
     console.log(req.params);
     let id = req.params.id;
     //get the data from the db
     Article.findById(id).then(article=>{
+        
+        if(user){
+            context.loggedIn = true;
+            context.firstName = user.username;
+        }
         // if (context.creator == user.id){
         //     context.isCurrentUser = true;
         // } 

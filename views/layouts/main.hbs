@@ -4,48 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <title>Wiki</title>
-    <link rel="stylesheet" href="css/site.css">
+    <link rel="stylesheet" href="../static/css/site.css">
 </head>
-<div>
-    <aside>
-    <div class="center">
-        <img class="logo" src="../static/img/KingslandLogo.jpeg" alt="logo">
-    </div>
+<body>
+    <div>
+        <aside>
+        <div class="center">
+            <img class="logo" src="../static/img/KingslandLogo.jpeg" alt="logo">
+        </div>
 
-    <nav>
-        {{#if loggedIn}}
-            <a href="/">Main Page</a>
-            <a href="/all-articles">All Articles</a>
-            <form>
-                <input type="text">
-                <input type="submit" value="Search">
-            </form>
-            <a href="/create">Create New Article</a>
-        {{else}}
-            <a href="/">Main Page</a>
-            <a href="/all-articles">All Articles</a>
-            <form>
-                <input type="text">
-                <input type="submit" value="Search">
-            </form>
-        {{/if}}
-    </nav>
-    </aside>
-    <div id="container">
-        <header>
+        <nav>
             {{#if loggedIn}}
-            <span>Welcome, {{firstName}}!</span>
-            <a href="/logout">[Logout]</a>
+                <a href="/">Main Page</a>
+                <a href="/all-articles">All Articles</a>
+                <form>
+                    <input type="text">
+                    <input type="submit" value="Search">
+                </form>
+                <a href="/create">Create New Article</a>
             {{else}}
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
+                <a href="/">Main Page</a>
+                <a href="/all-articles">All Articles</a>
+                <form>
+                    <input type="text">
+                    <input type="submit" value="Search">
+                </form>
             {{/if}}
-        </header>
-        {{{body}}}
-    </div>
-    
+        </nav>
+        </aside>
+        <div id="container">
+            <header>
+                {{#if loggedIn}}
+                <span>Welcome, {{firstName}}!</span>
+                <a href="/logout">[Logout]</a>
+                {{else}}
+                <a href="/login">Login</a>
+                <a href="/register">Register</a>
+                {{/if}}
+            </header>
+            {{{body}}}
+            <footer>
+                KingUni Wiki &copy; 2020
+            </footer>
+        </div>
+        
 
-</div>
+    </div>
+</body>
 
 
 </html>

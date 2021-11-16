@@ -14,15 +14,16 @@ module.exports = function(req, res) {
         
         if(user){
             context.loggedIn = true;
+            context.firstName = user.username;
 
-            context.id = id;
+            context.id = article._id;
             context.title = article.title;
             context.description = article.description;
             context.creator = article.creator;
             // context.articles = articleArray;
-            if(user.id == article.creator){
-                context.isCurrentUser = true;
-            }
+            // if(user.id == article.creator){
+            //     context.isCurrentUser = true;
+            // }
             res.render("edit", context);
         } else {
             res.render(`article`, context);
