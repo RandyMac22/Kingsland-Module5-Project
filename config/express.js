@@ -13,10 +13,11 @@ module.exports = (app) => {
     app.set('view engine', '.hbs');
     // Setup the body parser
     app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(express.json());
     // Setup the static files
     app.use(express.static('static'));
     app.use('/static', express.static('static'));
     app.use('/static', express.static(__dirname + '/static'));
     //Setup cookie parser
     app.use(cookieParser());
-};
+}

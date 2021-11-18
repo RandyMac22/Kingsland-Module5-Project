@@ -1,4 +1,5 @@
 const Article = require("../models/Article");
+const { validationResult } = require("express-validator");
 
 module.exports = function(req, res) {
     console.log("Getting articles");
@@ -15,6 +16,10 @@ module.exports = function(req, res) {
     if(user){
         context.loggedIn = true;
         context.firstName = user.username;
+    }
+    context.type = res.show;
+    if(res.show != "none"){
+        context.message = res.message;
     }
 
     Article.find({}).then(articles=>{
@@ -35,6 +40,7 @@ module.exports = function(req, res) {
         } else {
             context.articles = articleArray;
         }
+        context.type = "none";
         
         res.render("index", context);
         console.log(user);

@@ -174,12 +174,28 @@ article>p {
     white-space: pre-wrap;
 }
 
+.error {
+    background-color: #FA8072;
+}
+
+.success {
+    background-color: #35922d;
+}
+
+.warning {
+    background-color: #d31818;
+}
+
+.none {
+    display: none;
+}
+
 #notifications {
 	width: 100%;
 	margin-top: 1%;
 	border-radius: 6px;
-	background-color: #FA8072;
-    display: none;
+    font-size: 1.5em;
+	/* background-color: #FA8072; */
 }
 
 #notifications p{

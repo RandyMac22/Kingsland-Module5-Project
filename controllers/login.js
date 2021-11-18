@@ -32,6 +32,10 @@ module.exports = (req, res) => {
                     }
                     const token = jwt.sign(userToken, jwtConfig.secret, jwtConfig.options);
                     res.cookie("user", token);
+                    res.cookie("status", {
+                        type: "success",
+                        message: "Login successful!"
+                    });
                     //console.log(token);
                     res.redirect("/");
                 } else {

@@ -1,7 +1,9 @@
+// Packages
 let jwt = require("jsonwebtoken");
 const jwtConfig = require("../config/config").jwt;
+const { body, validationResult } = require("express-validator");
 
-// Require Controllers...
+// Controllers...
 const createPOST = require("../controllers/createPOST");
 const indexGET = require("../controllers/indexGET");
 const articleGET = require("../controllers/articleGET");
@@ -46,8 +48,19 @@ module.exports = (app) => {
             res.user = {
                 id: decodedJWT.id,
                 username: decodedJWT.username
-            }
+            };
         }
+        if(req.cookies.status){
+            let status = req.cookies.status;
+            res.clearCookie("status");
+            console.log(status);
+            res.show = status.type;
+            res.message = status.message;
+        }
+        if(res.show == undefined){
+            res.show = "none";
+        }
+        // res.type = "none";
         next();
     });
     
@@ -65,9 +78,8 @@ module.exports = (app) => {
 
     app.post("/edit/article/:id", edit.post);
 
-    app.get("/delete/article/:id", deleteArticle.get);
+    app.get("/delete/article/:id", deleteArticle);
 
-    app.post("/delete/article/:id", deleteArticle.post);
 
     app.get("/login", (req,res) => {
         //login page
@@ -76,11 +88,15 @@ module.exports = (app) => {
         let user = res.user;
         // console.log(user);
         let context = {};
+        context.type = res.show;
+        if(res.show != "none"){
+            context.message = res.message;
+        }
         //If logged in then redirect back to home
         if(user){
             context.loggedIn = true;
             context.firstName = user.username;
-            res.render("index");
+            res.redirect("/");
         } else {
             res.render("login");
         }
@@ -92,6 +108,10 @@ module.exports = (app) => {
     app.get("/logout", (req,res)=>{
         let context = {};
         res.clearCookie("user");
+        res.cookie("status", {
+            type:"success",
+            message: "Log out successful"
+        });
         res.redirect("/");
     });
 
@@ -102,16 +122,23 @@ module.exports = (app) => {
         let user = res.user;
         // console.log(user);
         let context = {};
-
+        context.type = res.show;
+        if(res.show != "none"){
+            context.message = res.message;
+        }
         if(!user){
             res.render("register");
         } else {
+            res.cookie("status", {
+                type: "success",
+                message: "User created!"
+            });
             context.loggedIn = true;
             context.firstName = user.username;
             res.redirect("/");
         }    
     });
 
-    app.post("/register", register)
+    app.post("/register",body("username").trim().isLength({ min:5 }).isAlphanumeric(),body("password").trim().isLength({ min: 8 }).isAlphanumeric(), register);
 
 };

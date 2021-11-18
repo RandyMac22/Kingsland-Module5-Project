@@ -11,6 +11,10 @@ module.exports = (req, res) => {
         context.loggedIn = true;
         context.firstName = user.username;
     }
+    context.type = res.show;
+    if(res.show != "none"){
+        context.message = res.message;
+    }
 
     Article.find({}).then(articles=>{
         // console.log(articles);

@@ -12,6 +12,10 @@ module.exports = {
     
         let id;
         id = req.params.id;
+        context.type = res.show;
+        if(res.show != "none"){
+            context.message = res.message;
+        }
     
         Article.findById(id).then(article=>{    
             if(user){
@@ -49,9 +53,20 @@ module.exports = {
         Article.findById(id)
         .then((article)=>{
             article.description = updates.description.trim();
+            if(updates.description.length < 20 ||/[^a-zA-Z 0-9\.]/g.test(updates.description)) {
+                res.cookie("status", {
+                    type: "error",
+                    message: "Please enter a description of letters and numbers at least 20 characters long."
+                })
+                res.redirect(`/edit/article/${id}`);
+            }
             article.save()
             .then((article)=>{
                 console.log("Update successful");
+                res.cookie("status", {
+                    type: "success",
+                    message: "Update successful"
+                });
                 res.redirect(`/article/${id}`);
             })
             .catch((err)=> {

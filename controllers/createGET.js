@@ -9,8 +9,13 @@ module.exports = (req,res) => {
     if(user){
         context.loggedIn = true;
         context.firstName = user.username;
+        context.type = "none";
         res.render("create", context);
     } else {
-        res.render("index");
+        res.cookie("status", {
+            type: "success",
+            message:"Article created!"
+        });
+        res.redirect("/");
     }  
 };
