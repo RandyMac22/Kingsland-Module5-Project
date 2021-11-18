@@ -1,0 +1,23 @@
+<div>     
+        <div id="container">
+            <main>
+                <h1>Welcome to KingUni Wiki!</h1>
+                <section>
+                    <h2>Delete article
+                    </h2>
+                    <div class="spacer">
+                        <form action="/delete/article/{{id}}" method="POST">
+                            <label>Article title</label>
+                            <h3>{{title}}</h3>
+                            <label>Content</label>
+                            <textarea name="description">
+                            {{description}}
+                            </textarea>
+                            <input type="submit" value="Delete Article">
+                        </form>
+                    </div>
+                </section>
+            </main>
+            
+        </div>
+    </div>

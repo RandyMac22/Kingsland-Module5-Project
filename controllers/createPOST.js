@@ -1,5 +1,7 @@
 //const fs = require("fs");
 const Article = require("../models/Article");
+const User = require("../models/User");
+
 const { ResultWithContext } = require("express-validator/src/chain");
 
 module.exports = function(req,res) {
@@ -20,17 +22,19 @@ module.exports = function(req,res) {
     new Article({
         title: fields.title,
         description: fields.description,
-        creator: creator
+        creator: creator,
+        dateTime: new Date()
     })
     .save()
     .then(article=>{
         console.log(article);
-        //console.log(newArticle);
+        User.findById(creator).then(user=>{
+            
+        })
         res.redirect("/");
     })
     .catch(err=>{
         console.log(err);
     });
-    console.log(creator);
 };
 

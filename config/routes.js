@@ -9,7 +9,8 @@ const allArticlesGET = require("../controllers/allArticlesGET");
 const createGET = require("../controllers/createGET");
 const register = require("../controllers/register");
 const login = require("../controllers/login");
-const editGET = require("../controllers/editGET");
+const edit = require("../controllers/edit");
+const deleteArticle = require("../controllers/deleteArticle");
 
 const Article = require("../models/Article");
 
@@ -60,37 +61,13 @@ module.exports = (app) => {
 
     app.get("/article/:id", articleGET);
 
-    app.get("/edit/article/:id", editGET);
+    app.get("/edit/article/:id", edit.get);
 
-    app.post("/edit/article/:id", (req, res) => {
+    app.post("/edit/article/:id", edit.post);
 
-    });
+    app.get("/delete/article/:id", deleteArticle.get);
 
-    app.get("/delete/article/:id", (req,res) => {
-        let user = res.user;
-        // console.log(user);
-        let context = {};
-
-        let id;
-        id = req.params.id;
-
-        Article.findById(id).then(article=>{
-            context.id = article._id;
-            
-        })
-
-        if(user){
-            context.loggedIn = true;
-            context.firstName = user.username;
-            res.render("delete/article/:id");
-        } else {
-            res.render(`/article/${id}`);
-        }
-    });
-
-    app.post("/delete/article/:id", (req, res)=>{
-
-    });
+    app.post("/delete/article/:id", deleteArticle.post);
 
     app.get("/login", (req,res) => {
         //login page

@@ -27,7 +27,8 @@ module.exports = (req, res) => {
                     let userToken = {
                         id: user._id,
                         username: user.username,
-                        firstName: user.firstName
+                        firstName: user.firstName,
+                        createdArticles: user.createdArticles
                     }
                     const token = jwt.sign(userToken, jwtConfig.secret, jwtConfig.options);
                     res.cookie("user", token);
